@@ -17,12 +17,12 @@ limitations under the License.
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Polymer Offline Weather</title>
 
-    <link rel="manifest" href="../common/manifest.json">
+    <link rel="manifest" href="common/manifest.json">
     <meta name="theme-color" content="#006064">
-    <link rel="icon" href="../common/icon.png">
+    <link rel="icon" href="common/icon.png">
 
-    <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-    <link rel="import" href="../common/elements.html">
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="common/elements.html">
 
     <!-- See https://www.polymer-project.org/1.0/docs/devguide/styling.html#style-modules -->
     <style is="custom-style" include="shared-styles"></style>
@@ -34,12 +34,12 @@ limitations under the License.
                             clients-claim
                             auto-register
                             reload-on-install>
-        <platinum-sw-import-script href="weather-fetch-handler.js"></platinum-sw-import-script>
+        <platinum-sw-import-script href="common/weather-fetch-handler.js"></platinum-sw-import-script>
         <platinum-sw-fetch handler="weatherFetchHandler"
                            path="/v1/public/yql"
                            origin="https://query.yahooapis.com">
         </platinum-sw-fetch>
-        <platinum-sw-cache default-cache-strategy="fastest"></platinum-sw-cache>
+        <platinum-sw-cache default-cache-strategy="networkFirst"></platinum-sw-cache>
       </platinum-sw-register>
 
       <template is="dom-if" if="[[coordinates]]">
@@ -97,6 +97,12 @@ limitations under the License.
     </template>
 
     <script>
+
+      window.addEventListener('WebComponentsReady', function() {
+        // Explicitly call the register() method. We need to wait until the template's variables are
+        // all set first, since the configuration depends on bound variables.
+        document.querySelector('platinum-sw-register').register();
+      });
       var t = document.querySelector('#t');
 
       t.weatherApiUrl = 'https://query.yahooapis.com/v1/public/yql';

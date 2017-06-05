@@ -1,0 +1,33 @@
+{
+  "entrypoint": "index.html",
+  "sources": [
+    "bower_components/sw-toolbox/**/*",
+    "bower_components/platinum-sw/bootstrap/**/*",
+    "bower_components/platinum-sw/service-worker.js",
+    "common/**/*",
+    "bootstrap/**/*",
+    "sw-toolbox/**/*",
+    "sw-import.js",
+    "bower.json"
+  ],
+  "extraDependencies": [
+    "common/manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
+  ],
+  "builds": [{
+    "name": "bundled",
+    "bundle": true,
+    "js": {"minify": true},
+    "css": {"minify": true},
+    "html": {"minify": true}
+  },{
+    "name": "unbundled",
+    "js": {"minify": true},
+    "css": {"minify": true},
+    "html": {"minify": true}
+  }],
+  "lint": {
+    "rules": ["polymer-1"],
+    "ignoreWarnings": []
+  }
+}
